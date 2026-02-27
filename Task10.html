@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript Assignment</title>
+</head>
+<body>
+
+  <h2>JavaScript Assignment Output</h2>
+  <p id="output"></p>
+
+  <script>
+    // Topic 1: let and const
+    let age = 15;
+    age = 16;
+
+    const schoolName = "City School";
+
+    // Topic 2: Data Types
+    let name = "Ali";
+    let marks = 85;
+    let isPassed = true;
+    let result;
+    let grade = null;
+
+    // Topic 3: User Input
+    let userName = prompt("Enter your name");
+    let userAge = Number(prompt("Enter your age"));
+
+    document.getElementById("output").innerHTML =
+      "Name: " + userName + "<br>" +
+      "Age: " + userAge + "<br><br>" +
+      "School: " + schoolName + "<br>" +
+      "Data Type of Name: " + typeof name + "<br>" +
+      "Data Type of Marks: " + typeof marks + "<br>" +
+      "Passed: " + isPassed;
+  </script>
+
+</body>
+</html>
