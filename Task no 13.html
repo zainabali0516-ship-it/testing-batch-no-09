@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Smart Calculator System</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #333;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      color: white;
+      margin-top: 20px;
+    }
+
+    .menu {
+      margin: 20px;
+    }
+
+    .menu button {
+      padding: 10px 15px;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      background: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .menu button:hover {
+      background: #ddd;
+    }
+
+    .container {
+      background: white;
+      width: 350px;
+      margin: auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      display: none;
+      animation: fade 0.3s ease-in;
+    }
+
+    @keyframes fade {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    input, select, button.calc {
+      width: 90%;
+      padding: 10px;
+      margin: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button.calc {
+      background: #667eea;
+      color: white;
+      border: none;
+    }
+
+    button.calc:hover {
+      background: #5a67d8;
+    }
+
+    p {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Smart Calculator System</h1>
+
+<div class="menu">
+  <button onclick="show('grocery')">Grocery</button>
+  <button onclick="show('student')">Student</button>
+  <button onclick="show('atm')">ATM</button>
+  <button onclick="show('restaurant')">Restaurant</button>
+  <button onclick="show('salary')">Salary</button>
+</div>
+
+<!-- Grocery -->
+<div class="container" id="grocery">
+  <h3>Grocery Bill</h3>
+  <input id="items" placeholder="Number of items">
+  <button class="calc" onclick="calculateBill()">Calculate</button>
+  <p id="groceryResult"></p>
+</div>
+
+<!-- Student -->
+<div class="container" id="student">
+  <h3>Student Result</h3>
+  <input id="name" placeholder="Student Name">
+  <button class="calc" onclick="calculateGrade()">Enter Marks</button>
+  <p id="studentResult"></p>
+</div>
+
+<!-- ATM -->
+<div class="container" id="atm">
+  <h3>ATM System</h3>
+  <input id="withdraw" placeholder="Withdraw amount">
+  <button class="calc" onclick="withdrawMoney()">Withdraw</button>
+  <p id="atmResult"></p>
+</div>
+
+<!-- Restaurant -->
+<div class="container" id="restaurant">
+  <h3>Restaurant Order</h3>
+  <select id="item">
+    <option value="500">Burger (500)</option>
+    <option value="1200">Pizza (1200)</option>
+    <option value="200">Drink (200)</option>
+  </select>
+  <input id="qty" placeholder="Quantity">
+  <button class="calc" onclick="calculateOrder()">Order Now</button>
+  <p id="restaurantResult"></p>
+</div>
+
+<!-- Salary -->
+<div class="container" id="salary">
+  <h3>Employee Salary</h3>
+  <button class="calc" onclick="calculateSalary()">Enter Employees</button>
+  <p id="salaryResult"></p>
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.container').forEach(c => c.style.display = 'none');
+  document.getElementById(id).style.display = 'block';
+}
+
+// Grocery
+function calculateBill() {
+  let n = +document.getElementById("items").value;
+  let total = 0;
+  for (let i = 0; i < n; i++) {
+    let price = +prompt("Enter price of item " + (i+1));
+    total += price;
+  }
+  if (total > 5000) total *= 0.9;
+  document.getElementById("groceryResult").innerText = "Total Bill: " + total;
+}
+
+// Student
+function calculateGrade() {
+  let name = document.getElementById("name").value;
+  let total = 0;
+  for (let i = 0; i < 5; i++) {
+    total += +prompt("Marks for subject " + (i+1));
+  }
+  let avg = total / 5;
+  let grade = avg >= 80 ? "A" : avg >= 60 ? "B" : avg >= 40 ? "C" : "Fail";
+  document.getElementById("studentResult").innerText =
+    `${name} | Total: ${total} | Avg: ${avg.toFixed(2)} | Grade: ${grade}`;
+}
+
+// ATM
+let balance = 10000;
+let attempts = 0;
+
+function withdrawMoney() {
+  if (attempts >= 3) {
+    document.getElementById("atmResult").innerText = "No attempts left!";
+    return;
+  }
+  let amount = +document.getElementById("withdraw").value;
+  if (amount > balance) {
+    attempts++;
+    document.getElementById("atmResult").innerText = "Insufficient balance!";
+  } else {
+    balance -= amount;
+    document.getElementById("atmResult").innerText = "Remaining Balance: " + balance;
+  }
+}
+
+// Restaurant
+function calculateOrder() {
+  let price = +document.getElementById("item").value;
+  let qty = +document.getElementById("qty").value;
+  let total = price * qty;
+  if (total > 2000) total *= 0.85;
+  document.getElementById("restaurantResult").innerText = "Final Bill: " + total;
+}
+
+// Salary
+function calculateSalary() {
+  let output = "";
+  for (let i = 0; i < 3; i++) {
+    let name = prompt("Employee name");
+    let hours = +prompt("Hours worked");
+    let salary = hours <= 40 ? hours * 500 : (40*500) + ((hours-40)*750);
+    output += `${name}: ${salary}\n`;
+  }
+  document.getElementById("salaryResult").innerText = output;
+}
+</script>
+
+</body>
+</html>
